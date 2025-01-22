@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeToBlack {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-to-black {
+  animation: fadeToBlack 0.5s ease-in forwards;
+}
+
+.fade-from-black {
+  animation: fadeToBlack 0.5s ease-out reverse;
+}
