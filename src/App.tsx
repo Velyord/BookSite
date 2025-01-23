@@ -293,23 +293,23 @@ function App() {
         style={{ opacity: textOpacity }}
       >
         {/* Top text box */}
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full px-4">
           <div className="relative text-2xl font-serif">
             <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm -m-4 rounded-lg" />
-            <p className="relative text-white p-4 leading-relaxed">
+            <p className="relative text-white p-4 py-1 leading-relaxed">
               {revealedText}
             </p>
           </div>
         </div>
 
         {/* Bottom section with text box and navigation */}
-        <div className="w-full max-w-4xl mx-auto flex justify-between items-end">
+        <div className="w-full px-4 flex justify-between items-end">
           {/* Bottom text box */}
           <div className="flex-grow relative text-xl font-serif mr-8">
             {isTextFullyRevealed && (
               <>
                 <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm -m-4 rounded-lg" />
-                <div className="relative text-white p-4">
+                <div className="relative text-white p-4 py-1">
                   <div className="whitespace-pre-line leading-relaxed">
                     {revealedBottomText}
                   </div>
