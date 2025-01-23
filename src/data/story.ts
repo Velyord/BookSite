@@ -1,11 +1,14 @@
 import { Page } from '../types';
 
+import forestImage from '../assets/fon/forest.png';
+import forestAudio from '../assets/glas/sample.mp3';
+
 export const storyPages: Page[] = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27',
+    image: forestImage,
     text: "The ancient forest stretched endlessly before you, its twisted branches reaching toward the darkening sky. The path ahead splits into shadows, each direction holding its own mysteries.",
-    audio: "https://go.escom.tv/lg340/sample.mp3",
+    audio: forestAudio,
     choices: [
       { text: "Take the misty path to the left", nextPageId: 2 },
       { text: "Follow the moonlit trail to the right", nextPageId: 3 }

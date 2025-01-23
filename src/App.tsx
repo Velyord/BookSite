@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, Volume2, VolumeX, RotateCcw } from 'lucide-react';
 import { storyPages } from './data/story';
 import type { StoryState } from './types';
+import coverDoorImage from './assets/fon/coverDoor.png';
 
 function App() {
   const [state, setState] = useState<StoryState>({
@@ -216,7 +217,7 @@ function App() {
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-50 transition-opacity duration-1000"
           style={{ 
-            backgroundImage: 'url(https://i.imgur.com/elmSQSu.jpeg)',
+            backgroundImage: `url(${coverDoorImage})`,
             opacity: 1 - coverOverlayOpacity
           }}
         />
