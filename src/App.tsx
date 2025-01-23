@@ -216,7 +216,7 @@ function App() {
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-50 transition-opacity duration-1000"
           style={{ 
-            backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570)',
+            backgroundImage: 'url(https://i.imgur.com/elmSQSu.jpeg)',
             opacity: 1 - coverOverlayOpacity
           }}
         />
@@ -235,7 +235,7 @@ function App() {
                 : 'animate-fade-in-heading'
             }`}
           >
-            The Journey Begins
+            Мистериозната врата
           </h1>
           
           <div 
@@ -245,23 +245,23 @@ function App() {
                 : 'opacity-0 animate-fade-in'
             }`}
           >
-            <p className="text-2xl">How would you like to experience the story?</p>
+            <p className="text-2xl">Как искаш да изживееш историята?</p>
             
             <div className="flex space-x-6">
               <button
                 onClick={() => handleVoicePreference(true)}
-                className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-lg transition-all"
+                className="flex items-center space-x-2 bg-black/50 hover:bg-black/75 px-6 py-3 rounded-lg transition-all"
               >
                 <Volume2 size={24} />
-                <span>Read to me</span>
+                <span>Чети ми</span>
               </button>
               
               <button
                 onClick={() => handleVoicePreference(false)}
-                className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-lg transition-all"
+                className="flex items-center space-x-2 bg-black/50 hover:bg-black/75 px-6 py-3 rounded-lg transition-all"
               >
                 <VolumeX size={24} />
-                <span>I'll read myself</span>
+                <span>Сам/а ще чета</span>
               </button>
             </div>
           </div>
@@ -312,7 +312,7 @@ function App() {
       >
         {/* Top text box */}
         <div className="w-full px-4">
-          <div className="relative text-2xl font-serif">
+          <div className="relative text-xl font-serif">
             <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm -m-4 rounded-lg" />
             <p className="relative text-white p-4 py-1 leading-relaxed">
               {revealedText}
