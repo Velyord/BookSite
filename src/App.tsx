@@ -20,6 +20,7 @@ function App() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [canStartReveal, setCanStartReveal] = useState(false);
   const [coverOverlayOpacity, setCoverOverlayOpacity] = useState(1);
+  const [isExitingCover, setIsExitingCover] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentPage = state.currentPage === 0 ? null : storyPages.find(page => page.id === state.currentPage);
@@ -58,18 +59,18 @@ function App() {
     // Start fading out the black overlay
     const fadeOutOverlay = setTimeout(() => {
       setOverlayOpacity(0);
-    }, 100);
+    }, 500);
 
     // Start fading in the text
     const fadeInText = setTimeout(() => {
       setTextOpacity(1);
-    }, 200);
+    }, 500);
 
     // Start fading in the buttons
     const fadeInButtons = setTimeout(() => {
       setButtonsOpacity(1);
       setCanStartReveal(true);
-    }, 300);
+    }, 500);
 
     return () => {
       clearTimeout(fadeOutOverlay);
@@ -145,7 +146,7 @@ function App() {
     setButtonsOpacity(0);
     setOverlayOpacity(1);
     
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     setState({
       currentPage: nextPageId,
@@ -170,7 +171,7 @@ function App() {
     setOverlayOpacity(1);
     setCoverOverlayOpacity(1);
     
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     setState({
       currentPage: 0,
@@ -183,7 +184,16 @@ function App() {
     });
   };
 
-  const handleVoicePreference = (useVoice: boolean) => {
+  const handleVoicePreference = async (useVoice: boolean) => {
+    setIsExitingCover(true); // Trigger exit animation
+    setCanStartReveal(false);
+    setTextOpacity(0);
+    setButtonsOpacity(0);
+    setOverlayOpacity(1);
+    setCoverOverlayOpacity(1);
+
+    await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for fade-out to complete
+
     setState({
       currentPage: 1,
       textRevealIndex: 0,
@@ -214,9 +224,23 @@ function App() {
         />
         
         <div className="relative h-full flex flex-col items-center justify-center text-white space-y-12">
-          <h1 className="text-6xl font-serif animate-fade-in-heading">The Journey Begins</h1>
+          <h1 
+            className={`text-6xl font-serif ${
+              isExitingCover 
+                ? 'transition-opacity duration-500 opacity-0' 
+                : 'animate-fade-in-heading'
+            }`}
+          >
+            The Journey Begins
+          </h1>
           
-          <div className="flex flex-col items-center space-y-8 opacity-0 animate-fade-in">
+          <div 
+            className={`flex flex-col items-center space-y-8 ${
+              isExitingCover
+                ? 'transition-opacity duration-500 opacity-0'
+                : 'opacity-0 animate-fade-in'
+            }`}
+          >
             <p className="text-2xl">How would you like to experience the story?</p>
             
             <div className="flex space-x-6">
@@ -274,12 +298,12 @@ function App() {
 
       {/* Transition overlay */}
       <div 
-        className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-300"
+        className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-500"
         style={{ opacity: overlayOpacity }}
       />
 
       <div 
-        className="relative h-full flex flex-col justify-between p-8 z-10 transition-opacity duration-300"
+        className="relative h-full flex flex-col justify-between p-8 z-10 transition-opacity duration-500"
         style={{ opacity: textOpacity }}
       >
         {/* Top text box */}
@@ -311,7 +335,7 @@ function App() {
           {/* Navigation circles */}
           {isTextFullyRevealed && state.bottomTextRevealIndex >= bottomText.length && (
             <div 
-              className="flex flex-col gap-3 transition-opacity duration-300"
+              className="flex flex-col gap-3 transition-opacity duration-500"
               style={{ opacity: buttonsOpacity }}
             >
               {currentPage.choices ? (
