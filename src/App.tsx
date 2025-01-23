@@ -20,7 +20,6 @@ function App() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [canStartReveal, setCanStartReveal] = useState(false);
   const [coverOverlayOpacity, setCoverOverlayOpacity] = useState(1);
-  const [isExitingCover, setIsExitingCover] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentPage = state.currentPage === 0 ? null : storyPages.find(page => page.id === state.currentPage);
@@ -185,7 +184,6 @@ function App() {
   };
 
   const handleVoicePreference = async (useVoice: boolean) => {
-    setIsExitingCover(true); // Trigger exit animation
     setCanStartReveal(false);
     setTextOpacity(0);
     setButtonsOpacity(0);
@@ -203,6 +201,8 @@ function App() {
       isPlaying: false,
       isTransitioning: false
     });
+
+    setOverlayOpacity(0);
   };
 
   // Cover Page
@@ -224,23 +224,9 @@ function App() {
         />
         
         <div className="relative h-full flex flex-col items-center justify-center text-white space-y-12">
-          <h1 
-            className={`text-6xl font-serif ${
-              isExitingCover 
-                ? 'transition-opacity duration-500 opacity-0' 
-                : 'animate-fade-in-heading'
-            }`}
-          >
-            The Journey Begins
-          </h1>
+          <h1 className="text-6xl font-serif animate-fade-in-heading">The Journey Begins</h1>
           
-          <div 
-            className={`flex flex-col items-center space-y-8 ${
-              isExitingCover
-                ? 'transition-opacity duration-500 opacity-0'
-                : 'opacity-0 animate-fade-in'
-            }`}
-          >
+          <div className="flex flex-col items-center space-y-8 opacity-0 animate-fade-in">
             <p className="text-2xl">How would you like to experience the story?</p>
             
             <div className="flex space-x-6">
