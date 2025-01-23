@@ -89,12 +89,17 @@ function App() {
       setState(prev => ({ ...prev, isPlaying: true }));
     }
 
+    if (state.textRevealIndex === 0) { // Set showChoices to true as soon as text starts revealing
+      setState(prev => ({ ...prev, showChoices: true }));
+    }
+
     const text = currentPage.text;
     if (state.textRevealIndex < text.length) {
       const timer = setTimeout(() => {
         setState(prev => ({
           ...prev,
-          textRevealIndex: prev.textRevealIndex + 1
+          textRevealIndex: prev.textRevealIndex + 1,
+          showChoices: true,
         }));
       }, 20);
       return () => clearTimeout(timer);
@@ -281,15 +286,18 @@ function App() {
   const nextPage = !currentPage.choices ? storyPages.find(page => page.id > currentPage.id) : null;
 
   if (currentPage.choices) {
-    bottomText = currentPage.choices.map((choice, index) => `${index + 1}) ${choice.text}`).join('\n');
-    revealedBottomText = bottomText.slice(0, state.bottomTextRevealIndex);
+    if (currentPage.choices.length === 1) { // If there's only one choice, don't add the "1)" prefix
+      bottomText = currentPage.choices[0].text;
+    } else { // For multiple choices, add the prefix
+      bottomText = currentPage.choices.map((choice, index) => `${index + 1}) ${choice.text}`).join('\n');
+    }
   } else if (nextPage) {
     bottomText = nextPage.text;
-    revealedBottomText = bottomText.slice(0, state.bottomTextRevealIndex);
   } else {
     bottomText = 'Start over?';
-    revealedBottomText = bottomText.slice(0, state.bottomTextRevealIndex);
   }
+
+  revealedBottomText = bottomText.slice(0, state.bottomTextRevealIndex);
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black">
@@ -325,7 +333,7 @@ function App() {
         <div className="w-full px-4 flex justify-between items-end">
           {/* Bottom text box */}
           <div className="flex-grow relative text-xl font-serif mr-8">
-            {isTextFullyRevealed && (
+            {isTextFullyRevealed && state.showChoices && (
               <>
                 <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm -m-4 rounded-lg" />
                 <div className="relative text-white p-4 py-1">
@@ -338,21 +346,30 @@ function App() {
           </div>
 
           {/* Navigation circles */}
-          {isTextFullyRevealed && state.bottomTextRevealIndex >= bottomText.length && (
+          {/*isTextFullyRevealed &&*/ state.showChoices && /*state.bottomTextRevealIndex >= bottomText.length &&*/ (
             <div 
               className="flex flex-col gap-3 transition-opacity duration-500"
               style={{ opacity: buttonsOpacity }}
             >
               {currentPage.choices ? (
-                currentPage.choices.map((_, index) => (
+                currentPage.choices.length === 1 ? ( // Check if there's only one choice
                   <button
-                    key={index}
-                    onClick={() => handleNextPage(currentPage.choices![index].nextPageId)}
+                    onClick={() => handleNextPage(currentPage.choices![0].nextPageId)}
                     className="w-12 h-12 rounded-full bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-opacity-70 transition-all"
                   >
-                    {index + 1}
+                    <ChevronRight size={24} /> {/* Use arrow icon for single choice */}
                   </button>
-                ))
+                ) : (
+                  currentPage.choices.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleNextPage(currentPage.choices![index].nextPageId)}
+                      className="w-12 h-12 rounded-full bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-opacity-70 transition-all"
+                    >
+                      {index + 1} {/* Show number for multiple choices */}
+                    </button>
+                  ))
+                )
               ) : nextPage ? (
                 <button
                   onClick={() => handleNextPage()}

@@ -7,11 +7,12 @@ export const storyPages: Page[] = [
   {
     id: 1,
     image: forestImage,
-    text: "The ancient forest stretched endlessly before you, its twisted branches reaching toward the darkening sky. The path ahead splits into shadows, each direction holding its own mysteries.",
+    text: "В сърцето на гората има група деца, които обичат да играят на изследователи. Те често скитат, търсейки нови приключения и всеки път откриват нови и интересни загадки. Макс е любопитен и винаги търси нови преживявания и предизвикателства. Той има любов към науката и технологиите и харесва да човърка джаджи и машинки. ",
     audio: forestAudio,
-    choices: [
-      { text: "Take the misty path to the left", nextPageId: 2 },
-      { text: "Follow the moonlit trail to the right", nextPageId: 3 }
+    choices: [{ 
+        text: "Алекс е брат близнак на Макс и въпреки, че споделя любовта към приключенията, той е по-методичен в подхода си. Запален читател е и обича фентъзи романи, като често се губи в техните светове. Лили е съседското момиче и единственото дете на двойка ботаници, които често пътуват по работа. В резултат на това тя прекарва доста време сама, изследвайки горите около къщата им, развивайки дълбока любов и уважение към природата.", 
+        nextPageId: 2 
+      },
     ]
   },
   {
