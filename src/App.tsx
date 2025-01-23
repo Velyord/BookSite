@@ -19,10 +19,22 @@ function App() {
   const [buttonsOpacity, setButtonsOpacity] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [canStartReveal, setCanStartReveal] = useState(false);
+  const [coverOverlayOpacity, setCoverOverlayOpacity] = useState(1);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentPage = state.currentPage === 0 ? null : storyPages.find(page => page.id === state.currentPage);
   
+  // Handle cover page fade in
+  useEffect(() => {
+    if (state.currentPage !== 0) return;
+    
+    const timer = setTimeout(() => {
+      setCoverOverlayOpacity(0);
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [state.currentPage]);
+
   // Preload image
   useEffect(() => {
     if (state.currentPage === 0 || !currentPage) return;
@@ -46,18 +58,18 @@ function App() {
     // Start fading out the black overlay
     const fadeOutOverlay = setTimeout(() => {
       setOverlayOpacity(0);
-    }, 500);
+    }, 100);
 
     // Start fading in the text
     const fadeInText = setTimeout(() => {
       setTextOpacity(1);
-    }, 2000);
+    }, 200);
 
     // Start fading in the buttons
     const fadeInButtons = setTimeout(() => {
       setButtonsOpacity(1);
       setCanStartReveal(true);
-    }, 3500);
+    }, 300);
 
     return () => {
       clearTimeout(fadeOutOverlay);
@@ -133,7 +145,7 @@ function App() {
     setButtonsOpacity(0);
     setOverlayOpacity(1);
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 300));
     
     setState({
       currentPage: nextPageId,
@@ -156,8 +168,9 @@ function App() {
     setTextOpacity(0);
     setButtonsOpacity(0);
     setOverlayOpacity(1);
+    setCoverOverlayOpacity(1);
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 300));
     
     setState({
       currentPage: 0,
@@ -187,14 +200,21 @@ function App() {
     return (
       <div className="relative w-screen h-screen overflow-hidden bg-black">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-50"
+          className="absolute inset-0 bg-cover bg-center opacity-50 transition-opacity duration-1000"
           style={{ 
-            backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570)'
+            backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570)',
+            opacity: 1 - coverOverlayOpacity
           }}
         />
         
+        {/* Black overlay */}
+        <div 
+          className="absolute inset-0 bg-black transition-opacity duration-1000"
+          style={{ opacity: coverOverlayOpacity }}
+        />
+        
         <div className="relative h-full flex flex-col items-center justify-center text-white space-y-12">
-          <h1 className="text-6xl font-serif">The Journey Begins</h1>
+          <h1 className="text-6xl font-serif animate-fade-in-heading">The Journey Begins</h1>
           
           <div className="flex flex-col items-center space-y-8 opacity-0 animate-fade-in">
             <p className="text-2xl">How would you like to experience the story?</p>
@@ -254,12 +274,12 @@ function App() {
 
       {/* Transition overlay */}
       <div 
-        className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-1500"
+        className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-300"
         style={{ opacity: overlayOpacity }}
       />
 
       <div 
-        className="relative h-full flex flex-col justify-between p-8 z-10 transition-opacity duration-1500"
+        className="relative h-full flex flex-col justify-between p-8 z-10 transition-opacity duration-300"
         style={{ opacity: textOpacity }}
       >
         {/* Top text box */}
@@ -291,7 +311,7 @@ function App() {
           {/* Navigation circles */}
           {isTextFullyRevealed && state.bottomTextRevealIndex >= bottomText.length && (
             <div 
-              className="flex flex-col gap-3 transition-opacity duration-1000"
+              className="flex flex-col gap-3 transition-opacity duration-300"
               style={{ opacity: buttonsOpacity }}
             >
               {currentPage.choices ? (
