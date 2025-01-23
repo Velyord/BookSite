@@ -1,4 +1,0 @@
-Let's create an app together. 
-The app will have many pages because it will be a reading app with choose your own adventure way of reading.
-I want the background of every page to be black. 
-Let's create now just the front page which shall be a cover image. It should have a title called "Тайната врата". And under it there should be two buttons 
