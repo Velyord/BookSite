@@ -32,7 +32,7 @@ function App() {
     
     const timer = setTimeout(() => {
       setCoverOverlayOpacity(0);
-    }, 500);
+    }, 543);
     
     return () => clearTimeout(timer);
   }, [state.currentPage]);
@@ -60,18 +60,18 @@ function App() {
     // Start fading out the black overlay
     const fadeOutOverlay = setTimeout(() => {
       setOverlayOpacity(0);
-    }, 500);
+    }, 543);
 
     // Start fading in the text
     const fadeInText = setTimeout(() => {
       setTextOpacity(1);
-    }, 500);
+    }, 543);
 
     // Start fading in the buttons
     const fadeInButtons = setTimeout(() => {
       setButtonsOpacity(1);
       setCanStartReveal(true);
-    }, 500);
+    }, 543);
 
     return () => {
       clearTimeout(fadeOutOverlay);
@@ -152,7 +152,7 @@ function App() {
     setButtonsOpacity(0);
     setOverlayOpacity(1);
     
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 543));
     
     setState({
       currentPage: nextPageId,
@@ -177,7 +177,7 @@ function App() {
     setOverlayOpacity(1);
     setCoverOverlayOpacity(1);
     
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 543));
     
     setState({
       currentPage: 0,
@@ -198,7 +198,7 @@ function App() {
     setOverlayOpacity(1);
     setCoverOverlayOpacity(1);
 
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for fade-out to complete
+    await new Promise((resolve) => setTimeout(resolve, 543)); // Wait for fade-out to complete
 
     setIsExitingCover(false);
 
@@ -237,7 +237,7 @@ function App() {
           <h1 
             className={`text-6xl font-serif ${
               isExitingCover 
-                ? 'transition-opacity duration-500 opacity-0' 
+                ? 'transition-opacity duration-543 opacity-0' 
                 : 'animate-fade-in-heading'
             }`}
           >
@@ -247,7 +247,7 @@ function App() {
           <div 
             className={`flex flex-col items-center space-y-8 ${
               isExitingCover
-                ? 'transition-opacity duration-500 opacity-0'
+                ? 'transition-opacity duration-543 opacity-0'
                 : 'opacity-0 animate-fade-in'
             }`}
           >
@@ -311,12 +311,12 @@ function App() {
 
       {/* Transition overlay */}
       <div 
-        className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-500"
-        style={{ opacity: overlayOpacity }}
+        className="absolute inset-0 bg-black pointer-events-none"
+        style={{ opacity: overlayOpacity, transition: 'opacity 543ms ease-in-out', }}
       />
 
       <div 
-        className="relative h-full flex flex-col justify-between p-8 z-10 transition-opacity duration-500"
+        className="relative h-full flex flex-col justify-between p-8 z-10 transition-opacity duration-543"
         style={{ opacity: textOpacity }}
       >
         {/* Top text box */}
@@ -348,7 +348,7 @@ function App() {
           {/* Navigation circles */}
           {/*isTextFullyRevealed &&*/ state.showChoices && /*state.bottomTextRevealIndex >= bottomText.length &&*/ (
             <div 
-              className="flex flex-col gap-3 transition-opacity duration-500"
+              className="flex flex-col gap-3 transition-opacity duration-543"
               style={{ opacity: buttonsOpacity }}
             >
               {currentPage.choices ? (
