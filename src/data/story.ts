@@ -1,7 +1,7 @@
 import { Page } from '../types';
 
 import forestImage from '../assets/fon/forest.png';
-import forestAudio from '../assets/glas/sample.mp3';
+import forestAudio from '../assets/glas/forest.mp3';
 
 export const storyPages: Page[] = [
   {
