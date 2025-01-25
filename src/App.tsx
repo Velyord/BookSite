@@ -101,7 +101,7 @@ function App() {
           textRevealIndex: prev.textRevealIndex + 1,
           showChoices: true,
         }));
-      }, 20);
+      }, 55);
       return () => clearTimeout(timer);
     }
   }, [state.currentPage, state.textRevealIndex, state.useVoice, state.isPlaying, canStartReveal]);
@@ -130,7 +130,7 @@ function App() {
           ...prev,
           bottomTextRevealIndex: prev.bottomTextRevealIndex + 1
         }));
-      }, 20);
+      }, 55);
       return () => clearTimeout(timer);
     }
   }, [state.currentPage, state.textRevealIndex, state.bottomTextRevealIndex]);
